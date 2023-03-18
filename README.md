@@ -1,4 +1,4 @@
 # KaninNYC
 files for Kanin NYC website
 
-July 29 - 3 different versions of the landing page uploaded
+Set for release by April 15th, 2023
