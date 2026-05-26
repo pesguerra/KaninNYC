@@ -1,0 +1,92 @@
+@host = http://localhost:8080
+@adminAuth = paste-admin-user-value-here
+@cashierAuth = paste-cashier-user-value-here
+@chefAuth = paste-chef-user-value-here
+
+### Health check
+GET {{host}}/api/health
+
+### Register a new pending user
+POST {{host}}/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "newuser@kaninnyc.com",
+  "password": "password123"
+}
+
+### Login as seeded admin
+# Copy user from the response into @adminAuth above.
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@kaninnyc.com",
+  "password": "password"
+}
+
+### Login as seeded cashier
+# Copy user from the response into @cashierAuth above.
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "cashier@kaninnyc.com",
+  "password": "password"
+}
+
+### Login as seeded chef
+# Copy user from the response into @chefAuth above.
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "chef@kaninnyc.com",
+  "password": "password"
+}
+
+### Current logged-in admin
+GET {{host}}/api/auth/me
+authorization: {{adminAuth}}
+
+### Current logged-in cashier
+GET {{host}}/api/auth/me
+authorization: {{cashierAuth}}
+
+### Admin: list users
+GET {{host}}/api/admin/users
+authorization: {{adminAuth}}
+
+### Admin: approve user as cashier
+PATCH {{host}}/api/admin/users/4/role
+Content-Type: application/json
+authorization: {{adminAuth}}
+
+{
+  "role": "CASHIER",
+  "approved": true
+}
+
+### Admin: approve user as chef
+PATCH {{host}}/api/admin/users/4/role
+Content-Type: application/json
+authorization: {{adminAuth}}
+
+{
+  "role": "CHEF",
+  "approved": true
+}
+
+### Admin: approve user as admin
+PATCH {{host}}/api/admin/users/4/role
+Content-Type: application/json
+authorization: {{adminAuth}}
+
+{
+  "role": "ADMIN",
+  "approved": true
+}
+
+### Admin: delete user
+DELETE {{host}}/api/admin/users/4
+authorization: {{adminAuth}}
