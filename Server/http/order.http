@@ -1,0 +1,98 @@
+@host = http://localhost:8080
+@cashierAuth = paste-cashier-user-value-here
+@chefAuth = paste-chef-user-value-here
+@checkoutSessionId = paste-stripe-checkout-session-id-here
+
+### POS: list menu items
+GET {{host}}/api/pos/menu
+authorization: {{cashierAuth}}
+
+### POS: list all orders
+GET {{host}}/api/pos/orders
+authorization: {{cashierAuth}}
+
+### POS: create cash order
+POST {{host}}/api/pos/orders
+Content-Type: application/json
+authorization: {{cashierAuth}}
+
+{
+  "name": "Test Guest",
+  "paymentMethod": "CASH",
+  "notes": "Extra napkins",
+  "items": [
+    {
+      "menuItemId": 1,
+      "quantity": 1
+    },
+    {
+      "menuItemId": 2,
+      "quantity": 2
+    }
+  ]
+}
+
+### POS: create card order with Stripe Checkout Session
+POST {{host}}/api/pos/orders
+Content-Type: application/json
+authorization: {{cashierAuth}}
+
+{
+  "name": "Card Guest",
+  "paymentMethod": "CARD",
+  "notes": "Stripe test order",
+  "items": [
+    {
+      "menuItemId": 1,
+      "quantity": 1
+    },
+    {
+      "menuItemId": 6,
+      "quantity": 1
+    }
+  ]
+}
+
+### POS: check Stripe Checkout Session after success redirect
+GET {{host}}/api/pos/checkout-session/{{checkoutSessionId}}
+authorization: {{cashierAuth}}
+
+### Kitchen: list active orders
+GET {{host}}/api/kitchen/orders
+authorization: {{chefAuth}}
+
+### Kitchen: mark order in progress
+PATCH {{host}}/api/kitchen/orders/1/status
+Content-Type: application/json
+authorization: {{chefAuth}}
+
+{
+  "status": "IN_PROGRESS"
+}
+
+### Kitchen: mark order ready
+PATCH {{host}}/api/kitchen/orders/1/status
+Content-Type: application/json
+authorization: {{chefAuth}}
+
+{
+  "status": "READY"
+}
+
+### Kitchen: mark order completed
+PATCH {{host}}/api/kitchen/orders/1/status
+Content-Type: application/json
+authorization: {{chefAuth}}
+
+{
+  "status": "COMPLETED"
+}
+
+### Kitchen: cancel order
+PATCH {{host}}/api/kitchen/orders/1/status
+Content-Type: application/json
+authorization: {{chefAuth}}
+
+{
+  "status": "CANCELLED"
+}

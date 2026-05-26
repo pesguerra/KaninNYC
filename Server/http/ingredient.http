@@ -1,0 +1,34 @@
+@host = http://localhost:8080
+@adminAuth = paste-admin-user-value-here
+
+### Admin: list inventory
+GET {{host}}/api/admin/inventory
+authorization: {{adminAuth}}
+
+### Admin: create inventory item
+POST {{host}}/api/admin/inventory
+Content-Type: application/json
+authorization: {{adminAuth}}
+
+{
+  "name": "Calamansi",
+  "quantity": 30,
+  "unit": "pieces",
+  "notes": "For drinks and palabok garnish."
+}
+
+### Admin: update inventory item
+PUT {{host}}/api/admin/inventory/1
+Content-Type: application/json
+authorization: {{adminAuth}}
+
+{
+  "name": "Chicken thighs",
+  "quantity": 45,
+  "unit": "lb",
+  "notes": "Updated count after delivery."
+}
+
+### Admin: delete inventory item
+DELETE {{host}}/api/admin/inventory/11
+authorization: {{adminAuth}}
