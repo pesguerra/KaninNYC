@@ -17,6 +17,10 @@ const featureLinks = [
   { feature: "USER_ROLES", label: "Users", to: "/users/management" },
 ];
 
+const adminLinks = [
+  { label: "Analytics", to: "/analytics" },
+];
+
 function Brand({ onClick }) {
   return (
     <Link className="brand" to="/" aria-label="Kanin NYC home" onClick={onClick}>
@@ -46,6 +50,7 @@ export function Header({ loggedInUser, setLoggedInUser }) {
     () => featureLinks.filter((link) => features.includes(link.feature)),
     [features],
   );
+  const visibleAdminLinks = loggedInUser?.role === "ADMIN" ? adminLinks : [];
 
   const closeNav = () => setIsOpen(false);
   const handleLogout = () => {
@@ -79,6 +84,16 @@ export function Header({ loggedInUser, setLoggedInUser }) {
           />
         ))}
         {staffLinks.map((item) => (
+          <NavLink
+            key={item.label}
+            to={item.to}
+            onClick={closeNav}
+            className={({ isActive }) => (isActive ? "is-active" : undefined)}
+          >
+            {item.label}
+          </NavLink>
+        ))}
+        {visibleAdminLinks.map((item) => (
           <NavLink
             key={item.label}
             to={item.to}
