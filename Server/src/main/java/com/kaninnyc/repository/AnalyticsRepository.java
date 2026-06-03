@@ -5,6 +5,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -25,6 +26,17 @@ public class AnalyticsRepository {
                 """,
                 Integer.class,
                 date
+        );
+    }
+
+    public BigDecimal totalSales(){
+        return jdbcTemplate.queryForObject(
+                """
+                        SELECT SUM(total)
+                        FROM orders
+                        WHERE status = 'COMPLETED';
+                     """,
+                BigDecimal.class
         );
     }
 }

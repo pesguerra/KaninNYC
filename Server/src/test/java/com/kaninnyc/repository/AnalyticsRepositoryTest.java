@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -30,5 +31,12 @@ class AnalyticsRepositoryTest {
         Integer actual = repository.findNumOfOrdersAtDate(date);
 
         assertEquals(2, actual);
+    }
+
+    @Test
+    void shouldFindTotalSalesOfCompletedOrders(){
+        BigDecimal actual = repository.totalSales();
+
+        assertEquals(new BigDecimal("12.00"), actual);
     }
 }
