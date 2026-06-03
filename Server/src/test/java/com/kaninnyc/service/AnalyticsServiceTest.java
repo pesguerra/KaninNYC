@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import static org.mockito.Mockito.when;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -28,5 +29,14 @@ class AnalyticsServiceTest {
         Integer actual = service.findTodaysNumOfOrders();
 
         assertEquals(2, actual);
+    }
+
+    @Test
+    void shouldFindTotalSalesOfCompletedOrders(){
+        when(repository.totalSales()).thenReturn(new BigDecimal("12.00"));
+
+        BigDecimal actual = repository.totalSales();
+
+        assertEquals(new BigDecimal("12.00"), actual);
     }
 }
