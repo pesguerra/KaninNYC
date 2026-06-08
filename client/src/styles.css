@@ -690,6 +690,10 @@ a {
   margin-bottom: 0;
 }
 
+.analytics-summary-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
 .analytics-reports {
   display: grid;
   gap: 16px;
@@ -1179,6 +1183,7 @@ a {
   .menu-list,
   .instagram-grid,
   .instagram-embed-wrap,
+  .analytics-summary-grid,
   .analytics-reports {
     grid-template-columns: 1fr;
   }
