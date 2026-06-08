@@ -259,4 +259,3 @@ values
     (91, 'PENDING', 18.00, 'cs_test_kanin_seed_091', 'pi_test_kanin_seed_091', 'ch_test_kanin_seed_091'),
     (95, 'SUCCEEDED', 18.00, 'cs_test_kanin_seed_095', 'pi_test_kanin_seed_095', 'ch_test_kanin_seed_095'),
     (99, 'SUCCEEDED', 24.00, 'cs_test_kanin_seed_099', 'pi_test_kanin_seed_099', 'ch_test_kanin_seed_099');
-
