@@ -18,7 +18,7 @@ function RequireFeature({ loggedInUser, feature, children }) {
     return <Navigate to="/users/login" state={{ message: "You must be logged in to see that." }} />;
   }
 
-  if (!loggedInUser.features?.includes(feature)) {
+  if (!loggedInUser.hasFeature(feature)) {
     return <Navigate to="/" state={{ message: "Your account does not have access to that tool." }} />;
   }
 
@@ -30,7 +30,7 @@ function RequireAdmin({ loggedInUser, children }) {
     return <Navigate to="/users/login" state={{ message: "You must be logged in to see that." }} />;
   }
 
-  if (loggedInUser.role !== "ADMIN") {
+  if (!loggedInUser.isAdmin()) {
     return <Navigate to="/" state={{ message: "Your account does not have access to that tool." }} />;
   }
 

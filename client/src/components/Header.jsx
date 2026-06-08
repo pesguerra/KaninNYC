@@ -44,13 +44,12 @@ function NavItem({ item, onNavigate }) {
 export function Header({ loggedInUser, setLoggedInUser }) {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
-  const features = loggedInUser?.features ?? [];
 
   const staffLinks = useMemo(
-    () => featureLinks.filter((link) => features.includes(link.feature)),
-    [features],
+    () => featureLinks.filter((link) => loggedInUser?.hasFeature(link.feature)),
+    [loggedInUser],
   );
-  const visibleAdminLinks = loggedInUser?.role === "ADMIN" ? adminLinks : [];
+  const visibleAdminLinks = loggedInUser?.isAdmin() ? adminLinks : [];
 
   const closeNav = () => setIsOpen(false);
   const handleLogout = () => {
