@@ -17,10 +17,6 @@ const featureLinks = [
   { feature: "USER_ROLES", label: "Users", to: "/users/management" },
 ];
 
-const adminLinks = [
-  { label: "Analytics", to: "/analytics" },
-];
-
 function Brand({ onClick }) {
   return (
     <Link className="brand" to="/" aria-label="Kanin NYC home" onClick={onClick}>
@@ -44,12 +40,12 @@ function NavItem({ item, onNavigate }) {
 export function Header({ loggedInUser, setLoggedInUser }) {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+  const features = loggedInUser?.features ?? [];
 
   const staffLinks = useMemo(
-    () => featureLinks.filter((link) => loggedInUser?.hasFeature(link.feature)),
-    [loggedInUser],
+    () => featureLinks.filter((link) => features.includes(link.feature)),
+    [features],
   );
-  const visibleAdminLinks = loggedInUser?.isAdmin() ? adminLinks : [];
 
   const closeNav = () => setIsOpen(false);
   const handleLogout = () => {
@@ -83,16 +79,6 @@ export function Header({ loggedInUser, setLoggedInUser }) {
           />
         ))}
         {staffLinks.map((item) => (
-          <NavLink
-            key={item.label}
-            to={item.to}
-            onClick={closeNav}
-            className={({ isActive }) => (isActive ? "is-active" : undefined)}
-          >
-            {item.label}
-          </NavLink>
-        ))}
-        {visibleAdminLinks.map((item) => (
           <NavLink
             key={item.label}
             to={item.to}
