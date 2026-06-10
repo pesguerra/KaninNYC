@@ -2,6 +2,7 @@ import { useState } from "react";
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 import App from "../App.jsx";
 import { readLoggedInUser } from "../api.js";
+import { AnalyticsDashboard } from "../staff/AnalyticsDashboard.jsx";
 import { CheckoutCancel } from "../staff/CheckoutCancel.jsx";
 import { CheckoutSuccess } from "../staff/CheckoutSuccess.jsx";
 import { InventoryManagement } from "../staff/InventoryManagement.jsx";
@@ -17,7 +18,19 @@ function RequireFeature({ loggedInUser, feature, children }) {
     return <Navigate to="/users/login" state={{ message: "You must be logged in to see that." }} />;
   }
 
-  if (!loggedInUser.features?.includes(feature)) {
+  if (!loggedInUser.hasFeature(feature)) {
+    return <Navigate to="/" state={{ message: "Your account does not have access to that tool." }} />;
+  }
+
+  return children;
+}
+
+function RequireAdmin({ loggedInUser, children }) {
+  if (loggedInUser === null) {
+    return <Navigate to="/users/login" state={{ message: "You must be logged in to see that." }} />;
+  }
+
+  if (!loggedInUser.isAdmin()) {
     return <Navigate to="/" state={{ message: "Your account does not have access to that tool." }} />;
   }
 
@@ -71,6 +84,14 @@ function AppRouter() {
             <RequireFeature loggedInUser={loggedInUser} feature="INVENTORY">
               <InventoryManagement />
             </RequireFeature>
+          ),
+        },
+        {
+          path: "analytics",
+          element: (
+            <RequireAdmin loggedInUser={loggedInUser}>
+              <AnalyticsDashboard />
+            </RequireAdmin>
           ),
         },
         {
