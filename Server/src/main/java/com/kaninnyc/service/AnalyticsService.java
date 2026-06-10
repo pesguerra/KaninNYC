@@ -20,7 +20,7 @@ public class AnalyticsService {
         return repository.findNumOfOrdersAtDate(date);
     }
 
-    public BigDecimal totalSalesOfCompletedOrders(){
+    public BigDecimal shouldFindTotalSalesOfCompletedOrders(){
         return repository.totalSales();
     }
 }
