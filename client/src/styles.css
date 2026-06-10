@@ -690,35 +690,6 @@ a {
   margin-bottom: 0;
 }
 
-.analytics-summary-grid {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-}
-
-.analytics-reports {
-  display: grid;
-  gap: 16px;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  margin-top: 18px;
-}
-
-.analytics-reports section {
-  background: rgba(255, 253, 247, 0.82);
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  padding: 18px;
-}
-
-.analytics-reports h3 {
-  color: var(--ink);
-  margin: 0 0 8px;
-}
-
-.analytics-reports p {
-  color: var(--muted);
-  line-height: 1.5;
-  margin: 0;
-}
-
 .inventory-card-button {
   background: transparent;
   border: 0;
@@ -1182,9 +1153,7 @@ a {
   .mission-grid,
   .menu-list,
   .instagram-grid,
-  .instagram-embed-wrap,
-  .analytics-summary-grid,
-  .analytics-reports {
+  .instagram-embed-wrap {
     grid-template-columns: 1fr;
   }
 

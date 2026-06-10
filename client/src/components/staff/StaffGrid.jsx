@@ -1,3 +1,3 @@
-export function StaffGrid({ children, className = "" }) {
-  return <div className={`staff-list ${className}`.trim()}>{children}</div>;
+export function StaffGrid({ children }) {
+  return <div className="staff-list">{children}</div>;
 }
