@@ -1,13 +1,15 @@
+import { FrontendUser } from "./models/FrontendUser.js";
+
 const API_BASE = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:8080";
 
 export function readLoggedInUser() {
   const user = localStorage.getItem("loggedInUser");
-  return user ? JSON.parse(user) : null;
+  return user ? new FrontendUser(JSON.parse(user)) : null;
 }
 
 export function saveLoggedInUser(authResponse) {
   const userStringAndHash = authResponse.user.split("|");
-  const loggedInUser = JSON.parse(userStringAndHash[0]);
+  const loggedInUser = new FrontendUser(JSON.parse(userStringAndHash[0]));
   loggedInUser.diyJwt = authResponse.user;
   loggedInUser.features = authResponse.features ?? [];
   localStorage.setItem("loggedInUser", JSON.stringify(loggedInUser));
