@@ -15,12 +15,17 @@ public class AnalyticsService {
         this.repository = repository;
     }
 
-    public Integer findTodaysNumOfOrders(){
+    public Integer findTodaysNumOfOrders() {
         LocalDate date = LocalDate.now();
         return repository.findNumOfOrdersAtDate(date);
     }
 
-    public BigDecimal shouldFindTotalSalesOfCompletedOrders(){
+    public BigDecimal shouldFindTotalSalesOfCompletedOrders() {
         return repository.totalSales();
+    }
+
+    public BigDecimal totalSales () {
+        BigDecimal total = repository.totalSales();
+        return total == null ? BigDecimal.ZERO : total;
     }
 }
