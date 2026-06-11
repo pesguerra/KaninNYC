@@ -33,6 +33,16 @@ public class OrderRepository {
         return orders.stream().findFirst();
     }
 
+    public List<Order> findByUserId(Integer user_id) {
+        List<Order> orders = jdbcTemplate.query(
+                "select id, name, status, payment_method, total, created_at, notes from orders where user_id = ? order by created_at desc",
+                this::mapOrder,
+                user_id
+        );
+        attachItems(orders);
+        return orders;
+    }
+
     public List<Order> findByStatusInOrderByCreatedAtAsc(Collection<OrderStatus> statuses) {
         String placeholders = statuses.stream().map(status -> "?").reduce((left, right) -> left + "," + right).orElse("?");
         Object[] params = statuses.stream().map(Enum::name).toArray();

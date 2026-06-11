@@ -7,6 +7,7 @@ import java.util.List;
 
 public class Order {
     private Integer id;
+    private User user;
     private String name;
     private OrderStatus status = OrderStatus.RECEIVED;
     private PaymentMethod paymentMethod;
@@ -21,6 +22,14 @@ public class Order {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public setUser(User user){
+        this.user = user;
     }
 
     public String getName() {

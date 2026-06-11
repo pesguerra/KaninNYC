@@ -24,6 +24,7 @@ create table menu_items (
 
 create table orders (
 	id int primary key auto_increment,
+	user_id int,
 	name varchar(100) not null,
 	status enum(
 		'RECEIVED',
@@ -38,7 +39,10 @@ create table orders (
         'CARD') not null,
     total decimal(8, 2) not null,
     created_at datetime default current_timestamp,
-    notes text
+    notes text,
+	constraint fk_orders_user
+		foreign key(user_id)
+		references user(id)
 );
 
 create table order_items (

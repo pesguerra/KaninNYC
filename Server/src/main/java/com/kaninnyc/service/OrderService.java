@@ -101,6 +101,13 @@ public class OrderService {
     }
 
     @Transactional(readOnly = true)
+    public List<OrderResponse> ordersByUserId(Integer user_id) {
+        return orderRepository.findByUserId(user_id).stream()
+                .map(orderMapper::toResponse)
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
     public List<OrderResponse> activeKitchenOrders() {
         return orderRepository.findByStatusInOrderByCreatedAtAsc(
                         List.of(OrderStatus.RECEIVED, OrderStatus.IN_PROGRESS, OrderStatus.READY)
