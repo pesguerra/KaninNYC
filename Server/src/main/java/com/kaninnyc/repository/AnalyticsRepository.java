@@ -39,4 +39,20 @@ public class AnalyticsRepository {
                 BigDecimal.class
         );
     }
+
+    public String topMenuItem(){
+        return jdbcTemplate.queryForObject(
+                """
+                        SELECT mi.`name`
+                        FROM orders o\s
+                        LEFT JOIN order_items oi ON oi.order_id = o.id\s
+                        LEFT JOIN menu_items mi ON oi.menu_item  = mi.id\s
+                        WHERE o.status != 'CANCELLED'
+                        GROUP BY oi.menu_item
+                        ORDER BY SUM(oi.quantity) DESC
+                        LIMIT 1;
+                        """,
+                String.class
+        );
+    }
 }
